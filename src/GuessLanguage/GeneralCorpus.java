@@ -2,22 +2,14 @@ package GuessLanguage;
 
 import java.util.HashMap;
 
-public class GeneralCorpus extends AbstractCorpus {
+public class GeneralCorpus extends Corpus {
 	
 	HashMap<String, Corpus> HMCorpus;
 
 	public GeneralCorpus (String name, HashMap<String, Corpus> HMCorpus)
 	{
-		this.name = name;
+		super(name);
 		this.HMCorpus = HMCorpus;
-		
-		this.occurences = new int[26];		
-		for(int i=0; i<26; i++)
-		{
-			this.occurences[i]=0;
-		}
-
-		this.frequences = new double[26];
 	}
 	
 	public void addCorpus(Corpus newCorpus)

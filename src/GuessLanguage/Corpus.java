@@ -6,8 +6,14 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 
 
-public class Corpus extends AbstractCorpus {
+public class Corpus {
 
+	protected String name;
+	protected double nb_carac;	
+	protected int[] occurences;
+	protected double[] frequences;
+	protected String path = "./corpus/";
+	
 	public Corpus (String name)
 	{
 		this.name = name;
@@ -21,6 +27,17 @@ public class Corpus extends AbstractCorpus {
 		this.frequences = new double[26];
 	}
 
+	public void setPath(String newPath)
+	{
+		path = newPath;
+	}
+	
+	public void analyse()
+	{
+		this.analyseOccurences();
+		this.analyseFrequences();
+	}
+	
 	public void analyseOccurences()
 	{	
 		int c;
@@ -48,4 +65,43 @@ public class Corpus extends AbstractCorpus {
 			System.out.println ("Erreur IO");
 		}
 	}
+	
+	public void analyseFrequences()
+	{
+		for(int i=0; i<26; i++)
+		{
+			this.frequences[i] = this.occurences[i] / this.nb_carac;
+		}
+	}
+	
+	public double probaWord(String word)
+	{
+		double p = 1.0;
+		for(int i=0; i<word.length(); i++)
+		{
+			p *= this.frequences[word.charAt(i)-'a'];
+		}
+		return p;
+	}
+	
+	public String toString()
+	{
+		String s = "=== Corpus ===\n";
+		s += "name: " + this.name + "\n";
+		s += "nb_carac: " + (int)this.nb_carac + "\n";
+		s += "occurences:\n";
+		for(int i=0; i<26; i++)
+		{
+			s += "["+ (char)(i+97) +"] - " + this.occurences[i] + "\n";
+		}
+		s += "frequences:\n";
+		for(int i=0; i<26; i++)
+		{
+			s += "["+ (char)(i+97) +"] - " + this.frequences[i] + "\n";
+		}
+	
+		return s;
+	}
+	
+	
 }
