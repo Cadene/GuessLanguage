@@ -10,9 +10,13 @@ public class GuessLanguage
     	System.out.println("= = = Guess Language = = =");
     	System.out.println();
 
-    	/* 1. Construction d'un modèle de langage */
+    	/* 1. Construction d'un modÔøΩle de langage */
     	
-    	// Création d'un Corpus général & affichage
+    	// CrÔøΩation d'un Corpus gÔøΩnÔøΩral & affichage
+    	Corpus tc = CorpusFactory.makeCorpus("english");
+    	tc.analyse();
+    	System.out.println(tc.toString());
+    	
         List<String> languages = new ArrayList<String>();
         languages.add("french");
         languages.add("dutch");
@@ -28,26 +32,43 @@ public class GuessLanguage
         
         //Cherchons des exemples pertinants
         
-        /* 2. Prédiction de la langue d'un mot */
+        /* 2. PrÔøΩdiction de la langue d'un mot */
         
         // 2.6.
-        System.out.println("fatta : " + gc.guessLanguage("fatta"));
-        System.out.println("ora : " + gc.guessLanguage("ora"));
-        System.out.println("che : " + gc.guessLanguage("che"));
-        System.out.println("dota : " + gc.guessLanguage("dota"));
-        System.out.println("volta : " + gc.guessLanguage("volta"));
-        System.out.println("by : " + gc.guessLanguage("by"));
-        System.out.println("other : " + gc.guessLanguage("other"));
-        System.out.println("mean : " + gc.guessLanguage("mean"));
-        System.out.println("statistics : " + gc.guessLanguage("statistics"));
-        System.out.println("chocolate : " + gc.guessLanguage("chocolate"));
-        System.out.println("president : " + gc.guessLanguage("president"));
-        System.out.println("thanks : " + gc.guessLanguage("thanks"));
-        System.out.println("patatoes : " + gc.guessLanguage("patatoes"));
-        System.out.println("constitutionnellement : " + gc.guessLanguage("constitutionnellement"));
-        System.out.println("peter : " + gc.guessLanguage("peter"));
-        System.out.println("pomme : " + gc.guessLanguage("pomme"));
-        System.out.println("daar : " + gc.guessLanguage("daar"));
+        //17 /9v /8f
+        HashMap<String,String> HMWords = new HashMap<String,String>();
+        HMWords.put("fatta","italian");
+        HMWords.put("ora","italian");
+        HMWords.put("che","italian");
+        HMWords.put("dato","italian");
+        HMWords.put("volta","italian");
+        HMWords.put("by","english");
+        HMWords.put("other","english");
+        HMWords.put("mean","english");
+        HMWords.put("statistics","english");
+        HMWords.put("chocolate","english");
+        HMWords.put("president","english");
+        HMWords.put("thanks","english");
+        HMWords.put("potatoes","english");
+        HMWords.put("constitutionnellement","french");
+        HMWords.put("peter","english");
+        HMWords.put("pomme","french");
+        HMWords.put("daar","dutch");
+        
+        System.out.println("Premiere Strategy: performance de la liste de mots : " + gc.calculPerf(HMWords));
+        System.out.println();
+        
+        gc.setProbaLangStrategy(1);
+        System.out.println("Deuxieme Strategy: performance de la liste de mots : " + gc.calculPerf(HMWords));
+        System.out.println();
+        
+        
+        // 3.1.1
+        // Plus la taille du corpus est grande, plus le corpus est representatif de la langue
+        
+        // 3.1.2
+        // 
+        
         
         
         /*System.out.println("gc.probaMot(probability): " + gc.probaWord("probability") + "\n");

@@ -5,14 +5,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
-
 public class Corpus {
 
 	protected String name;
-	protected double nb_carac;	
+	protected int nb_carac;	
 	protected int[] occurences;
 	protected double[] frequences;
 	protected String path = "./corpus/";
+	protected int nb_words;
 	
 	public Corpus (String name)
 	{
@@ -38,21 +38,34 @@ public class Corpus {
 		this.analyseFrequences();
 	}
 	
+	/* Supposons qu'un Corpus possede au moins 1 mot et qu'il ne se fini pas par un espace */
 	public void analyseOccurences()
 	{	
 		int c;
-		this.nb_carac = 0.0;
+		this.nb_carac = 0;
+		this.nb_words = 1;
+		int buff = 0;
 		try 
 		{
 			// calcul de nb_carac & des occurences
 			BufferedReader br = new BufferedReader(new FileReader(this.path + this.name + ".txt"));
 			while ((c = br.read()) != -1)
 			{
-				if(c >= 'a' && c <='z')
+				if(c >= 'a' && c <= 'z')
 				{
 					this.occurences[c - 'a']++;
 					this.nb_carac++;
 				}
+				
+				if(c == ' ')
+				{
+					if(this.nb_carac != 0)
+					{
+						if(buff != ' ')
+							this.nb_words++;
+					}
+				}
+				buff = c;
 			}
 			br.close();		
 		}
@@ -68,9 +81,10 @@ public class Corpus {
 	
 	public void analyseFrequences()
 	{
+		double nb_carac = (double)this.nb_carac;
 		for(int i=0; i<26; i++)
 		{
-			this.frequences[i] = this.occurences[i] / this.nb_carac;
+			this.frequences[i] = this.occurences[i] / nb_carac;
 		}
 	}
 	
@@ -89,6 +103,7 @@ public class Corpus {
 		String s = "=== Corpus ===\n";
 		s += "name: " + this.name + "\n";
 		s += "nb_carac: " + (int)this.nb_carac + "\n";
+		s += "nb_words: " + this.nb_words + "\n";
 		s += "occurences:\n";
 		for(int i=0; i<26; i++)
 		{

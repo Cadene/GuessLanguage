@@ -5,11 +5,18 @@ import java.util.HashMap;
 public class GeneralCorpus extends Corpus {
 	
 	HashMap<String, Corpus> HMCorpus;
+	int probaLangStrategy;
 
 	public GeneralCorpus (String name, HashMap<String, Corpus> HMCorpus)
 	{
 		super(name);
 		this.HMCorpus = HMCorpus;
+		probaLangStrategy = 0;
+	}
+	
+	public void setProbaLangStrategy(int s)
+	{
+		probaLangStrategy = s;
 	}
 	
 	public void addCorpus(Corpus newCorpus)
@@ -29,14 +36,14 @@ public class GeneralCorpus extends Corpus {
 	
 	public String guessLanguage(String word)
 	{
-		System.out.println("\nguessLanguage("+word+"):");
+		//System.out.println("\nguessLanguage("+word+"):");
 		double max = 0.0;
 		String language = "ERROR: corpus length=0";
 		double inter;
 		for(String lang : HMCorpus.keySet())
 		{
 			inter = this.probaLang(lang,word);
-			System.out.println(lang + " : " + inter);
+			//System.out.println(lang + " : " + inter);
 			
 			
 			if(inter > max)
@@ -48,14 +55,38 @@ public class GeneralCorpus extends Corpus {
 		return language;
 	}
 	
+
+	public double calculPerf(HashMap<String,String> HMWords)
+	{
+		int nbFalse=0;
+		for(String word : HMWords.keySet())
+		{
+			if(!HMWords.get(word).equals(this.guessLanguage(word)))
+			{
+				System.out.println(word + " : " + this.guessLanguage(word) + " au lieu de " + HMWords.get(word));
+				nbFalse++;	
+			}
+		}
+		return 1 - nbFalse / (double)HMWords.size();
+	}
+	
 	private double probaLang(String language, String word)
 	{
-		return probaWord(word,language);
+		if(this.probaLangStrategy == 0)
+			return probaWord(word,language);
+		else
+			return probaWord(word,language) * probaLang(language);
+	}
+	
+	private double probaLang(String language)
+	{
+		return this.HMCorpus.get(language).nb_words / (double)this.nb_words;
 	}
 	
 	public void analyseOccurences()
 	{	
-		this.nb_carac = 0.0;
+		this.nb_carac = 0;
+		this.nb_words = 0;
 		for(String mapKey : this.HMCorpus.keySet())
 		{
 			Corpus c = this.HMCorpus.get(mapKey);
@@ -63,6 +94,7 @@ public class GeneralCorpus extends Corpus {
 			for(int i=0; i<26; i++)
 				this.occurences[i] += c.occurences[i];
 			this.nb_carac += c.nb_carac;
+			this.nb_words += c.nb_words;
 		}
 	}
 	
