@@ -7,26 +7,26 @@ public class GeneralCorpus extends Corpus {
 	HashMap<String, Corpus> HMCorpus;
 	int probaLangStrategy;
 
-	public GeneralCorpus (String name, HashMap<String, Corpus> HMCorpus)
-	{
+	public GeneralCorpus (String name, HashMap<String, Corpus> HMCorpus){
 		super(name);
 		this.HMCorpus = HMCorpus;
 		probaLangStrategy = 0;
 	}
 	
-	public void setProbaLangStrategy(int s)
-	{
+	public Corpus getCorpus(String name){
+		return HMCorpus.get(name);
+	}
+	
+	public void setProbaLangStrategy(int s){
 		probaLangStrategy = s;
 	}
-	
-	public void addCorpus(Corpus newCorpus)
-	{
-		this.HMCorpus.put(newCorpus.name, newCorpus);
+	public void setStrategy(IStrategy newStrat){
+		for(String lang : HMCorpus.keySet()){
+			HMCorpus.get(lang).setStrategy(newStrat);
+		}
 	}
-	
-	public Corpus getCorpus(String name)
-	{
-		return HMCorpus.get(name);
+	public void addCorpus(Corpus newCorpus){
+		this.HMCorpus.put(newCorpus.name, newCorpus);
 	}
 	
 	public double probaWord(String word, String language)
@@ -62,7 +62,7 @@ public class GeneralCorpus extends Corpus {
 		{
 			if(!HMWords.get(word).equals(this.guessLanguage(word)))
 			{
-				System.out.println(word + " : " + this.guessLanguage(word) + " au lieu de " + HMWords.get(word));
+				//System.out.println(word + " : " + this.guessLanguage(word) + " au lieu de " + HMWords.get(word));
 				nbFalse++;	
 			}
 		}
@@ -82,7 +82,7 @@ public class GeneralCorpus extends Corpus {
 		return this.HMCorpus.get(language).nb_words / (double)this.nb_words;
 	}
 	
-	public void analyseOccurences()
+	protected void analyseOccurences()
 	{	
 		this.nb_carac = 0;
 		this.nb_words = 0;

@@ -13,7 +13,7 @@ public class GuessLanguage
     	/* 1. Construction d'un modole de langage */
     	
     	// Creation d'un Corpus geral & affichage
-    	Corpus tc = CorpusFactory.makeCorpus("english");
+    	Corpus tc = CorpusFactory.makeCorpus("test");
     	tc.analyse();
     	System.out.println(tc.toString());
     	
@@ -55,11 +55,13 @@ public class GuessLanguage
         HMWords.put("pomme","french");
         HMWords.put("daar","dutch");
         
-        System.out.println("Premiere Strategy: performance de la liste de mots : " + gc.calculPerf(HMWords));
+        System.out.println("= Strategie Simple Lettre avec Corpus egaux=");
+        System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords));
         System.out.println();
         
         gc.setProbaLangStrategy(1);
-        System.out.println("Deuxieme Strategy: performance de la liste de mots : " + gc.calculPerf(HMWords));
+        System.out.println("= Strategie Simple Lettre avec Corpus non egaux =");
+        System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords));
         System.out.println();
         
         
@@ -69,8 +71,11 @@ public class GuessLanguage
         // 3.1.2
         // 
         
-        
-        
+        gc.setStrategy(new DoubleStrategy());
+        gc.setProbaLangStrategy(0);
+        System.out.println("= Strategie Double Lettre avec Corpus egaux =");
+        System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords));
+        System.out.println();
         /*System.out.println("gc.probaMot(probability): " + gc.probaWord("probability") + "\n");
 
         System.out.println(gc.guessLanguage("statistics"));

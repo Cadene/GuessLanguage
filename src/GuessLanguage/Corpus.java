@@ -22,6 +22,8 @@ public class Corpus {
 	protected HashMap<String, Integer> double_occurences;
 	protected HashMap<String, Double> double_frequences;
 	
+	protected IStrategy strategy;
+	
 	public Corpus (String name)
 	{
 		this.name = name;
@@ -36,11 +38,23 @@ public class Corpus {
 		
 		this.double_occurences = new HashMap<String, Integer>();
 		this.double_frequences = new HashMap<String, Double>();
+		
+		this.strategy = new SimpleStrategy();
 	}
-
-	public void setPath(String newPath)
-	{
+	
+	
+	public double[] getFrequences(){
+		return frequences;
+	}
+	public HashMap<String, Double> getDouble_frequences(){
+		return double_frequences;
+	}
+	
+	public void setPath(String newPath){
 		path = newPath;
+	}
+	public void setStrategy(IStrategy newStrat){
+		strategy = newStrat;
 	}
 	
 	public void analyse()
@@ -50,7 +64,7 @@ public class Corpus {
 	}
 	
 	/* Supposons qu'un Corpus possede au moins 1 mot et qu'il ne se fini pas par un espace */
-	public void analyseOccurences()
+	protected void analyseOccurences()
 	{	
 		int c;
 		int buff = 0;
@@ -113,8 +127,7 @@ public class Corpus {
 			System.out.println ("Erreur IO");
 		}
 	}
-	
-	public void analyseFrequences()
+	protected void analyseFrequences()
 	{
 		for(int i=0; i<26; i++)
 		{
@@ -127,14 +140,8 @@ public class Corpus {
 		}
 	}
 	
-	public double probaWord(String word)
-	{
-		double p = 1.0;
-		for(int i=0; i<word.length(); i++)
-		{
-			p *= this.frequences[word.charAt(i)-'a'];
-		}
-		return p;
+	public double probaWord(String word){
+		return this.strategy.probaWord(word, this);
 	}
 	
 	public String toString()
