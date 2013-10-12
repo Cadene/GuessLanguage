@@ -45,7 +45,6 @@ public class GeneralCorpus extends Corpus {
 			inter = this.probaLang(lang,word);
 			//System.out.println(lang + " : " + inter);
 			
-			
 			if(inter > max)
 			{
 				max = inter;
@@ -87,14 +86,25 @@ public class GeneralCorpus extends Corpus {
 	{	
 		this.nb_carac = 0;
 		this.nb_words = 0;
+		this.nb_double = 0;
+		Integer actual_occ;
 		for(String mapKey : this.HMCorpus.keySet())
 		{
 			Corpus c = this.HMCorpus.get(mapKey);
 			c.analyse(); //analyseFrequences
 			for(int i=0; i<26; i++)
 				this.occurences[i] += c.occurences[i];
+			for(String double_lettre : c.double_occurences.keySet())
+			{
+				actual_occ = this.double_occurences.get(double_lettre);
+				if(actual_occ == null)
+					this.double_occurences.put(double_lettre, c.double_occurences.get(double_lettre));
+				else
+					this.double_occurences.put(double_lettre, c.double_occurences.get(double_lettre) + actual_occ);
+			}
 			this.nb_carac += c.nb_carac;
 			this.nb_words += c.nb_words;
+			this.nb_double += c.nb_double;
 		}
 	}
 	

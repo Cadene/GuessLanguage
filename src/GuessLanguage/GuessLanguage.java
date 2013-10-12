@@ -10,9 +10,9 @@ public class GuessLanguage
     	System.out.println("= = = Guess Language = = =");
     	System.out.println();
 
-    	/* 1. Construction d'un mod�le de langage */
+    	/* 1. Construction d'un modole de langage */
     	
-    	// Cr�ation d'un Corpus g�n�ral & affichage
+    	// Creation d'un Corpus geral & affichage
     	Corpus tc = CorpusFactory.makeCorpus("english");
     	tc.analyse();
     	System.out.println(tc.toString());
@@ -32,7 +32,7 @@ public class GuessLanguage
         
         //Cherchons des exemples pertinants
         
-        /* 2. Pr�diction de la langue d'un mot */
+        /* 2. Prediction de la langue d'un mot */
         
         // 2.6.
         //17 /9v /8f
