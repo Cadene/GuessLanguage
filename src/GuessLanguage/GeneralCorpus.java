@@ -59,12 +59,18 @@ public class GeneralCorpus extends Corpus {
 
 	public double calculPerf(HashMap<String,String> HMWords)
 	{
+		return this.calculPerf(HMWords,false);
+	}
+	
+	public double calculPerf(HashMap<String,String> HMWords, boolean printErrors)
+	{
 		int nbFalse=0;
 		for(String word : HMWords.keySet())
 		{
 			if(!HMWords.get(word).equals(this.guessLanguage(word)))
 			{
-				System.out.println(word + " : " + this.guessLanguage(word) + " au lieu de " + HMWords.get(word));
+				if(printErrors)
+					System.out.println("ERROR: " + word + " : " + this.guessLanguage(word) + " au lieu de " + HMWords.get(word));
 				nbFalse++;	
 			}
 		}

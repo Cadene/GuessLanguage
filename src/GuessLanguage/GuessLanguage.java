@@ -54,32 +54,43 @@ public class GuessLanguage
         HMWords.put("peter","english");
         HMWords.put("pomme","french");
         HMWords.put("daar","dutch");
-        
-        gc.setProbaLangStrategy(new EqualLangStrategy());
+
         System.out.println("= Strategie Simple Lettre avec Corpus egaux=");
+        gc.setStrategy(new SimpleStrategy());
+        gc.setProbaLangStrategy(new EqualLangStrategy());
         System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords));
         System.out.println();
-        
-        gc.setProbaLangStrategy(new NEqualLangStrategy());
+
         System.out.println("= Strategie Simple Lettre avec Corpus non egaux =");
+        gc.setStrategy(new SimpleStrategy());
+        gc.setProbaLangStrategy(new NEqualLangStrategy());
         System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords));
         System.out.println();
-        
+
+        System.out.println("= Strategie Double Lettre avec Corpus egaux =");
         gc.setStrategy(new DoubleStrategy());
         gc.setProbaLangStrategy(new EqualLangStrategy());
-        System.out.println("= Strategie Double Lettre avec Corpus egaux =");
         System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords));
         System.out.println();
         
+        System.out.println("-> Ajout des corpus frenchPlus et englishPlus <-");
         gc.removeCorpus("french");
         gc.removeCorpus("english");
         gc.addCorpus(CorpusFactory.makeCorpus("frenchPlus","french"));
         gc.addCorpus(CorpusFactory.makeCorpus("englishPlus","english"));
         gc.analyse();
+        System.out.println();
         
+        System.out.println("= Strategie Simple Lettre avec Corpus egaux et Corpus ameliores =");
+        gc.setStrategy(new SimpleStrategy());
         gc.setProbaLangStrategy(new EqualLangStrategy());
-        System.out.println("= Strategie Simple Lettre avec Corpus egaux=");
         System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords));
+        System.out.println();
+
+        System.out.println("= Strategie Simple Lettre avec Corpus egaux et Corpus ameliores =");
+        gc.setStrategy(new DoubleStrategy());
+        gc.setProbaLangStrategy(new EqualLangStrategy());
+        System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords,true));
         System.out.println();
         
         
