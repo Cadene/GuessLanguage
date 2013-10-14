@@ -12,7 +12,7 @@ public class GuessLanguage
 
     	/* 1. Construction d'un modole de langage */
     	
-    	// Creation d'un Corpus geral & affichage
+    	// Creation d'un Corpus general & affichage
     	Corpus tc = CorpusFactory.makeCorpus("test");
     	tc.analyse();
     	System.out.println(tc.toString());
@@ -55,12 +55,30 @@ public class GuessLanguage
         HMWords.put("pomme","french");
         HMWords.put("daar","dutch");
         
+        gc.setProbaLangStrategy(new EqualLangStrategy());
         System.out.println("= Strategie Simple Lettre avec Corpus egaux=");
         System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords));
         System.out.println();
         
-        gc.setProbaLangStrategy(1);
+        gc.setProbaLangStrategy(new NEqualLangStrategy());
         System.out.println("= Strategie Simple Lettre avec Corpus non egaux =");
+        System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords));
+        System.out.println();
+        
+        gc.setStrategy(new DoubleStrategy());
+        gc.setProbaLangStrategy(new EqualLangStrategy());
+        System.out.println("= Strategie Double Lettre avec Corpus egaux =");
+        System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords));
+        System.out.println();
+        
+        gc.removeCorpus("french");
+        gc.removeCorpus("english");
+        gc.addCorpus(CorpusFactory.makeCorpus("frenchPlus","french"));
+        gc.addCorpus(CorpusFactory.makeCorpus("englishPlus","english"));
+        gc.analyse();
+        
+        gc.setProbaLangStrategy(new EqualLangStrategy());
+        System.out.println("= Strategie Simple Lettre avec Corpus egaux=");
         System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords));
         System.out.println();
         
@@ -71,19 +89,9 @@ public class GuessLanguage
         // 3.1.2
         // 
         
-        gc.setStrategy(new DoubleStrategy());
-        gc.setProbaLangStrategy(0);
-        System.out.println("= Strategie Double Lettre avec Corpus egaux =");
-        System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords));
-        System.out.println();
-        /*System.out.println("gc.probaMot(probability): " + gc.probaWord("probability") + "\n");
-
-        System.out.println(gc.guessLanguage("statistics"));
-        System.out.println(gc.guessLanguage("probability"));
-        System.out.println(gc.guessLanguage("france"));
-        System.out.println(gc.guessLanguage("baguette"));
-        System.out.println(gc.guessLanguage("camembert") + "\n");
-        */
+        
+        
+        
         
 
     }

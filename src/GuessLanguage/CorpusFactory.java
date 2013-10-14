@@ -10,6 +10,11 @@ public class CorpusFactory {
 		return new Corpus(name);
 	}
 	
+	public static Corpus makeCorpus(String subName, String name)
+	{
+		return new Corpus(subName,name);
+	}
+	
 	public static GeneralCorpus makeGeneralCorpus(List<String> languages)
 	{
 		HashMap<String, Corpus> HMCorpus = new HashMap<String, Corpus>();

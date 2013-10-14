@@ -5,20 +5,19 @@ import java.util.HashMap;
 public class GeneralCorpus extends Corpus {
 	
 	HashMap<String, Corpus> HMCorpus;
-	int probaLangStrategy;
+	IStrategyLang probaLangStrategy = new EqualLangStrategy();
 
 	public GeneralCorpus (String name, HashMap<String, Corpus> HMCorpus){
 		super(name);
 		this.HMCorpus = HMCorpus;
-		probaLangStrategy = 0;
 	}
 	
 	public Corpus getCorpus(String name){
 		return HMCorpus.get(name);
 	}
 	
-	public void setProbaLangStrategy(int s){
-		probaLangStrategy = s;
+	public void setProbaLangStrategy(IStrategyLang strat){
+		probaLangStrategy = strat;
 	}
 	public void setStrategy(IStrategy newStrat){
 		for(String lang : HMCorpus.keySet()){
@@ -27,6 +26,9 @@ public class GeneralCorpus extends Corpus {
 	}
 	public void addCorpus(Corpus newCorpus){
 		this.HMCorpus.put(newCorpus.name, newCorpus);
+	}
+	public void removeCorpus(String corpusName){
+		this.HMCorpus.remove(corpusName);
 	}
 	
 	public double probaWord(String word, String language)
@@ -62,7 +64,7 @@ public class GeneralCorpus extends Corpus {
 		{
 			if(!HMWords.get(word).equals(this.guessLanguage(word)))
 			{
-				//System.out.println(word + " : " + this.guessLanguage(word) + " au lieu de " + HMWords.get(word));
+				System.out.println(word + " : " + this.guessLanguage(word) + " au lieu de " + HMWords.get(word));
 				nbFalse++;	
 			}
 		}
@@ -71,13 +73,10 @@ public class GeneralCorpus extends Corpus {
 	
 	private double probaLang(String language, String word)
 	{
-		if(this.probaLangStrategy == 0)
-			return probaWord(word,language);
-		else
-			return probaWord(word,language) * probaLang(language);
+		return probaLangStrategy.probaLang(language, word, this);
 	}
 	
-	private double probaLang(String language)
+	public double probaLang(String language)
 	{
 		return this.HMCorpus.get(language).nb_words / (double)this.nb_words;
 	}
@@ -91,7 +90,8 @@ public class GeneralCorpus extends Corpus {
 		for(String mapKey : this.HMCorpus.keySet())
 		{
 			Corpus c = this.HMCorpus.get(mapKey);
-			c.analyse(); //analyseFrequences
+			if(!c.isAnalysed)
+				c.analyse(); //analyseFrequences
 			for(int i=0; i<26; i++)
 				this.occurences[i] += c.occurences[i];
 			for(String double_lettre : c.double_occurences.keySet())

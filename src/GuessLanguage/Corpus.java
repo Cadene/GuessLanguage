@@ -9,15 +9,15 @@ import java.util.HashMap;
 public class Corpus {
 
 	protected String name;
-	
+	protected String subName;
 	protected String path = "./corpus/";
+	
+	protected boolean isAnalysed = false;
 	
 	protected int nb_carac;
 	protected int[] occurences;
 	protected double[] frequences;
-	
 	protected int nb_words;
-	
 	protected int nb_double;
 	protected HashMap<String, Integer> double_occurences;
 	protected HashMap<String, Double> double_frequences;
@@ -26,6 +26,12 @@ public class Corpus {
 	
 	public Corpus (String name)
 	{
+		this(name,name);
+	}
+	
+	public Corpus (String subName, String name)
+	{
+		this.subName = subName;
 		this.name = name;
 		
 		this.occurences = new int[26];		
@@ -61,6 +67,7 @@ public class Corpus {
 	{
 		this.analyseOccurences();
 		this.analyseFrequences();
+		this.isAnalysed = true;
 	}
 	
 	/* Supposons qu'un Corpus possede au moins 1 mot et qu'il ne se fini pas par un espace */
@@ -78,7 +85,7 @@ public class Corpus {
 		try 
 		{
 			// calcul de nb_carac & des occurences
-			BufferedReader br = new BufferedReader(new FileReader(this.path + this.name + ".txt"));
+			BufferedReader br = new BufferedReader(new FileReader(this.path + this.subName + ".txt"));
 			while ((c = br.read()) != -1)
 			{
 				if(c >= 'a' && c <= 'z')
