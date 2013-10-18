@@ -85,14 +85,13 @@ public class GuessLanguage
         System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords));
         System.out.println();
 
-        System.out.println("= Strategie Simple Lettre avec Corpus egaux et Corpus ameliores =");
+        System.out.println("= Strategie Double Lettre avec Corpus egaux et Corpus ameliores =");
         gc.setStrategy(new DoubleStrategy());
         gc.setProbaLangStrategy(new EqualLangStrategy());
         System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords,true));
         System.out.println();
         
-        
-        
+      
 
     }
 
