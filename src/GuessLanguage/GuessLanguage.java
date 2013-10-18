@@ -12,7 +12,6 @@ public class GuessLanguage
 
     	/* 1. Construction d'un modole de langage */
     	
-    	// Creation d'un Corpus general & affichage
     	Corpus tc = CorpusFactory.makeCorpus("test");
     	tc.analyse();
     	System.out.println(tc.toString());
@@ -35,7 +34,6 @@ public class GuessLanguage
         /* 2. Prediction de la langue d'un mot */
         
         // 2.6.
-        //17 /9v /8f
         HashMap<String,String> HMWords = new HashMap<String,String>();
         HMWords.put("fatta","italian");
         HMWords.put("ora","italian");
@@ -58,13 +56,13 @@ public class GuessLanguage
         System.out.println("= Strategie Simple Lettre avec Corpus egaux=");
         gc.setStrategy(new SimpleStrategy());
         gc.setProbaLangStrategy(new EqualLangStrategy());
-        System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords));
+        System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords, true));
         System.out.println();
 
         System.out.println("= Strategie Simple Lettre avec Corpus non egaux =");
         gc.setStrategy(new SimpleStrategy());
         gc.setProbaLangStrategy(new NEqualLangStrategy());
-        System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords));
+        System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords,true));
         System.out.println();
 
         System.out.println("= Strategie Double Lettre avec Corpus egaux =");
@@ -92,15 +90,6 @@ public class GuessLanguage
         gc.setProbaLangStrategy(new EqualLangStrategy());
         System.out.println("Performance de la liste de mots = " + gc.calculPerf(HMWords,true));
         System.out.println();
-        
-        
-        // 3.1.1
-        // Plus la taille du corpus est grande, plus le corpus est representatif de la langue
-        
-        // 3.1.2
-        // 
-        
-        
         
         
         

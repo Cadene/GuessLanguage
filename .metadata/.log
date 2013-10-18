@@ -328,3 +328,16 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86 -product org.eclipse.epp
 
 !ENTRY org.eclipse.ui 4 4 2013-10-11 16:50:18.423
 !MESSAGE Unable to find Action Set: org.eclipse.pde.ui.SearchActionSet
+!SESSION 2013-10-18 10:40:26.363 -----------------------------------------------
+eclipse.buildId=4.3.0.M20130911-1000
+java.version=1.6.0_51
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86, WS=cocoa, NL=fr_FR
+Framework arguments:  -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -keyring /Users/remicadene/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86 -product org.eclipse.epp.package.java.product -data /Users/remicadene/Dropbox/Etudes/MathInfo/Semestre5/LI323 - Stat - gr2/projet1 -product org.eclipse.epp.package.java.product -keyring /Users/remicadene/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2013-10-18 10:40:30.984
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16|server.tamazy.private|*.server.tamazy.private by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.ui 4 4 2013-10-18 10:40:32.059
+!MESSAGE Unable to find Action Set: org.eclipse.pde.ui.SearchActionSet
